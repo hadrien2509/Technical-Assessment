@@ -35,10 +35,10 @@ public class AddressBook {
         Boolean     foundA = false;
         Boolean     foundB = false;
 
-        if (personA == null || personA.isEmpty())
-            return -1;
-        if (personB == null || personA.isEmpty())
-            return -1;
+        // if (personA == null || personA.isEmpty())
+        //     return -1;
+        // if (personB == null || personA.isEmpty())
+        //     return -1;
         for (Person person : _persons)
         {
             if (person.getName().equals(personA))
@@ -77,17 +77,24 @@ public class AddressBook {
         return count;
     }
 
-    public Person OldestPerson ()
+    public ArrayList<Person> OldestPerson ()
     {
         Person oldest = _persons.get(0);
+        ArrayList<Person> oldests = new ArrayList<Person>();
 
         for (Person person : _persons)
         {
             if (person.getLocalBirthDate().isBefore(oldest.getLocalBirthDate()))
             {
                 oldest = person;
+                oldests.clear();
+                oldests.add(person);
+            }
+            else if (person.getLocalBirthDate().isEqual(oldest.getLocalBirthDate()))
+            {
+                oldests.add(person);
             }
         }
-        return oldest;
+        return oldests;
     }
 }

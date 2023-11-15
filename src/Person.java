@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 public class Person
 {
@@ -14,8 +15,9 @@ public class Person
         this._gender = gender;
         this._dateOfBirth = dateOfBirth;
 
-        // Parse the dates of birth
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        // Parse the dates of birth in a strict way to LocalDate type, throws an exception if the date is invalid
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uu").withResolverStyle(ResolverStyle.STRICT);
         this._localBirthDate = LocalDate.parse(dateOfBirth, formatter);
     }
 

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         
@@ -9,11 +11,14 @@ public class Main {
         AddressBook addressBook = new AddressBook(filePath);
 
         int howManyMales = addressBook.GenderCount("male");
-        Person oldestPerson = addressBook.OldestPerson();
         long comparisonBillPaul = addressBook.AgeComparison("Bill McKnight", "Paul Robinson");
+        ArrayList<Person> oldestPerson = addressBook.OldestPerson();
 
         System.out.println(howManyMales);
-        System.out.println(oldestPerson);
+        for (Person person : oldestPerson)
+        {
+            System.out.println(person.getName());
+        }
         System.out.println(comparisonBillPaul);
     }
 }
