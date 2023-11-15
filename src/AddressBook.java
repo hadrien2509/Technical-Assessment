@@ -24,7 +24,7 @@ public class AddressBook {
         }
         catch (IOException e)
         {
-            System.out.println("Error: File not found.");
+            System.err.println("Error: File not found.");
         }
     }
 
@@ -77,7 +77,7 @@ public class AddressBook {
         return count;
     }
 
-    public Person GetOldestPerson ()
+    public Person OldestPerson ()
     {
         Person oldest = _persons.get(0);
 
