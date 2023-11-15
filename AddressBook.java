@@ -31,6 +31,10 @@ public class AddressBook {
     {
     }
 
+    public static void GenderCount(String gender)
+    {
+    }
+
     public static void main(String[] args) {
         
         if (args.length != 1)
