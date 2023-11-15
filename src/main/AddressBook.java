@@ -9,6 +9,11 @@ public class AddressBook {
    
     private ArrayList<Person> _persons;
 
+    public ArrayList<Person> getPersons()
+    {
+        return this._persons;
+    }
+
     public AddressBook (String filePath)
     {
         _persons = new ArrayList<Person>();
@@ -21,10 +26,12 @@ public class AddressBook {
                     _persons.add(new Person(columns[0], columns[1], columns[2]));
                 }
             }
+            if (_persons.isEmpty())
+                System.err.println("Error: File doesn't contain any person's informations.");
         }
         catch (IOException e)
         {
-            System.err.println("Error: File not found.");
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
@@ -35,6 +42,8 @@ public class AddressBook {
         Boolean     foundA = false;
         Boolean     foundB = false;
 
+        if (_persons.isEmpty())
+            return 0;
         if (personA == null || personA.isEmpty())
             throw new IllegalArgumentException("First argument of AgeComparison is null or empty");
         if (personB == null || personB.isEmpty())
@@ -57,9 +66,9 @@ public class AddressBook {
             }
         }
         if (!foundA)
-            System.err.println(personA + "doesn't exist in this address book");
+            System.err.println(personA + " doesn't exist in this address book");
         if (!foundB)
-            System.err.println(personB + "doesn't exist in this address book");
+            System.err.println(personB + " doesn't exist in this address book");
         return ChronoUnit.DAYS.between(dateA, dateB);
     }
 
