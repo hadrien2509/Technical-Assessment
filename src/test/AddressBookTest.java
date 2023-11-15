@@ -7,11 +7,10 @@ public class AddressBookTest {
     /*** Methods tests ***/
 
     @Test
-    void OldestPerson() {
+    void OldestPersons() {
         AddressBook addressBook = new AddressBook("ressources/Test.txt");
         Person oldestPerson0 = addressBook.OldestPerson().get(0);
         Person oldestPerson1 = addressBook.OldestPerson().get(1);
-
 
         assertEquals("Hadrien Geissler", oldestPerson0.getName());
         assertEquals("Wes Jackson", oldestPerson1.getName());
@@ -27,12 +26,26 @@ public class AddressBookTest {
 
     @Test
     void GenderCount() {
-        AddressBook addressBook = new AddressBook("ressources/Test.txt");
-        int femaleCount = addressBook.GenderCount("Female");
-        int maleCount = addressBook.GenderCount("Male");
+        AddressBook addressBook1 = new AddressBook("ressources/AddressBook.txt");
+        int femaleCount1 = addressBook1.GenderCount("Female");
+        int maleCount1 = addressBook1.GenderCount("Male");
 
-        assertEquals(2, femaleCount);
-        assertEquals(8, maleCount);
+        assertEquals(2, femaleCount1);
+        assertEquals(3, maleCount1);
+
+        AddressBook addressBook2 = new AddressBook("ressources/Test.txt");
+        int femaleCount2 = addressBook2.GenderCount("Female");
+        int maleCount2 = addressBook2.GenderCount("Male");
+
+        assertEquals(2, femaleCount2);
+        assertEquals(8, maleCount2);
+
+        AddressBook addressBook3 = new AddressBook("ressources/NoMale.txt");
+        int femaleCount3 = addressBook3.GenderCount("Female");
+        int maleCount3 = addressBook3.GenderCount("Male");
+
+        assertEquals(5, femaleCount3);
+        assertEquals(0, maleCount3);
     }
 
     @Test
@@ -43,7 +56,23 @@ public class AddressBookTest {
         assertEquals(2862, AgeComparison);
     }
 
-    //For a leap year
+    @Test
+    void AgeAndYoungestTest () {
+        AddressBook addressBook = new AddressBook("ressources/Age.txt");
+        assertEquals(46, addressBook.getPersons().get(0).getAge());
+        assertEquals(38, addressBook.getPersons().get(1).getAge());
+        assertEquals(31, addressBook.getPersons().get(2).getAge());
+        assertEquals(43, addressBook.getPersons().get(3).getAge());
+        assertEquals(49, addressBook.getPersons().get(4).getAge());
+        assertEquals(123, addressBook.getPersons().get(5).getAge());
+        assertEquals(23, addressBook.getPersons().get(6).getAge());
+        assertEquals(23, addressBook.getPersons().get(7).getAge());
+        assertEquals("Charles David", addressBook.OldestPerson().get(0).getName());
+        assertEquals("Lea David", addressBook.YoungestPerson().get(0).getName());
+        assertEquals("Jack Black", addressBook.YoungestPerson().get(1).getName());
+    }
+
+    //For a leap year testing difference between 28th February and 1st March
     @Test
     void AgeComparisonLeapYear() {
         AddressBook addressBook = new AddressBook("ressources/Test.txt");
@@ -52,7 +81,7 @@ public class AddressBookTest {
         assertEquals(2, AgeComparison);
     }
 
-    //For not a leap year
+    //For a non leap year testing difference between 28th February and 1st March
     @Test
     void AgeComparisonNoLeapYear() {
         AddressBook addressBook = new AddressBook("ressources/Test.txt");
@@ -61,19 +90,20 @@ public class AddressBookTest {
         assertEquals(1, AgeComparison);
     }
 
+    /*** AgeComparison() invalid arguments tests ***/ 
     @Test
     void AgeComparisonIllegalArgument() {
         AddressBook addressBook = new AddressBook("ressources/Test.txt");
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             addressBook.AgeComparison(null, "Paul Robinson");
         });
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             addressBook.AgeComparison("Bill McKnight", null);
         });
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             addressBook.AgeComparison(null, null);
         });
 
@@ -87,7 +117,15 @@ public class AddressBookTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             addressBook.AgeComparison("", "");
-        }); 
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressBook.AgeComparison("Billy McKnight", "Bill McKnight");
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressBook.AgeComparison("Bill McKnight", "Billy McKnight");
+        });
     }
 
     /*** Invalid file format tests ***/
@@ -152,5 +190,37 @@ public class AddressBookTest {
         Person oldestPerson = addressBook.OldestPerson().get(0);
 
         assertEquals("Wes Jackson", oldestPerson.getName());
+    }
+
+    @Test
+    void EmptyColumns() {
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            AddressBook addressBook = new AddressBook("ressources/EmptyColumns.txt");
+
+            addressBook.OldestPerson();
+        });
+    }
+
+    /*** Invalid file path tests ***/
+
+    @Test
+    void FileNotFoundException() {
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            AddressBook addressBook = new AddressBook("ressources/DoesNotExist.txt");
+
+            addressBook.OldestPerson();
+        });
+    }
+
+    @Test
+    void FileNotReadableException() {
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            AddressBook addressBook = new AddressBook("ressources/NotReadable.txt"); //change file permissions to 000 before running this test
+
+            addressBook.OldestPerson();
+        });
     }
 }

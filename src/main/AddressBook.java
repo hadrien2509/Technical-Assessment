@@ -20,19 +20,19 @@ public class AddressBook {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath)))
         {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) { // Read the file line by line
                 String[] columns = line.split(", ");
-                if (columns.length == 3) {
-                    _persons.add(new Person(columns[0], columns[1], columns[2]));
+                if (columns.length == 3) { // If the line contains 3 columns, add a new person to the list
+                    _persons.add(new Person(columns[0], columns[1], columns[2])); // Add a new person to the list
                 }
             }
-            if (_persons.isEmpty())
-                System.err.println("Error: File doesn't contain any person's informations.");
         }
         catch (IOException e)
         {
-            System.err.println("Error: " + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
+        if (_persons.isEmpty())
+            throw new IllegalArgumentException("File doesn't contain any person's informations.");
     }
 
     public long AgeComparison (String personA, String personB)
@@ -42,12 +42,14 @@ public class AddressBook {
         Boolean     foundA = false;
         Boolean     foundB = false;
 
-        if (_persons.isEmpty())
-            return 0;
-        if (personA == null || personA.isEmpty())
-            throw new IllegalArgumentException("First argument of AgeComparison is null or empty");
-        if (personB == null || personB.isEmpty())
-            throw new IllegalArgumentException("First argument of AgeComparison is null or empty");
+        if (personA == null)
+            throw new NullPointerException("First argument of AgeComparison can't be null");
+        if (personB == null)
+            throw new NullPointerException("Second argument of AgeComparison can't be null");
+        if (personA.isEmpty())
+            throw new IllegalArgumentException("First argument of AgeComparison can't be empty");
+        if (personB.isEmpty())
+            throw new IllegalArgumentException("Second argument of AgeComparison can't be empty");
         for (Person person : _persons)
         {
             if (person.getName().equals(personA))
@@ -60,16 +62,18 @@ public class AddressBook {
                 dateB = person.getLocalBirthDate();
                 foundB = true;
             }
-            if (foundA && foundB)
+            if (foundA && foundB) // If both persons are found, break the loop in order to save time
             {
                 break ;
             }
         }
+        if (!foundA && !foundB)
+            throw new IllegalArgumentException(personA + " and " + personB + " don't exist in this address book");
         if (!foundA)
-            System.err.println(personA + " doesn't exist in this address book");
+            throw new IllegalArgumentException(personA + " doesn't exist in this address book");
         if (!foundB)
-            System.err.println(personB + " doesn't exist in this address book");
-        return ChronoUnit.DAYS.between(dateA, dateB);
+            throw new IllegalArgumentException(personB + " doesn't exist in this address book");
+        return ChronoUnit.DAYS.between(dateA, dateB); // Return the number of days between the two dates
     }
 
     public int GenderCount (String gender)
@@ -100,7 +104,7 @@ public class AddressBook {
             if (person.getLocalBirthDate().isBefore(oldest.getLocalBirthDate()))
             {
                 oldest = person;
-                oldests.clear();
+                oldests.clear(); // Clear the list of previous oldest person(s) and add the new oldest person
                 oldests.add(person);
             }
             else if (person.getLocalBirthDate().isEqual(oldest.getLocalBirthDate()))
@@ -109,5 +113,28 @@ public class AddressBook {
             }
         }
         return oldests;
+    }
+
+    public ArrayList<Person> YoungestPerson ()
+    {
+        if (_persons.isEmpty())
+            return null;
+        Person youngest = _persons.get(0);
+        ArrayList<Person> youngests = new ArrayList<Person>();
+
+        for (Person person : _persons)
+        {
+            if (person.getLocalBirthDate().isAfter(youngest.getLocalBirthDate()))
+            {
+                youngest = person;
+                youngests.clear(); // Clear the list of previous youngest person(s) and add the new youngest person
+                youngests.add(person);
+            }
+            else if (person.getLocalBirthDate().isEqual(youngest.getLocalBirthDate()))
+            {
+                youngests.add(person);
+            }
+        }
+        return youngests;
     }
 }
