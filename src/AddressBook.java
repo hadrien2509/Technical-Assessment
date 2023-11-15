@@ -11,7 +11,7 @@ public class AddressBook {
 
     public AddressBook (String filePath)
     {
-        _persons = new ArrayList<>();
+        _persons = new ArrayList<Person>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath)))
         {
             String line;
@@ -41,12 +41,12 @@ public class AddressBook {
             return -1;
         for (Person person : _persons)
         {
-            if (person.getName() == personA)
+            if (person.getName().equals(personA))
             {
                 dateA = person.getLocalBirthDate();
                 foundA = true;
             }
-            if (person.getName() == personB)
+            if (person.getName().equals(personB))
             {
                 dateB = person.getLocalBirthDate();
                 foundB = true;
@@ -71,7 +71,7 @@ public class AddressBook {
             return -1;
         for (Person person : _persons)
         {
-            if (person.getGender() == gender)
+            if (person.getGender().equals(gender))
                 count++;
         }
         return count;
