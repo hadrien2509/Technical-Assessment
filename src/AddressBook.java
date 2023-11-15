@@ -59,7 +59,7 @@ public class AddressBook {
         if (!foundA)
             System.err.println(personA + "doesn't exist in this address book");
         if (!foundB)
-            System.err.println(personA + "doesn't exist in this address book");
+            System.err.println(personB + "doesn't exist in this address book");
         return ChronoUnit.DAYS.between(dateA, dateB);
     }
 
