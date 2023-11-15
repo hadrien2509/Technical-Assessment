@@ -6,7 +6,7 @@ public class Person
     private String      _name;
     private String      _gender;
     private String      _dateOfBirth;
-    private LocalDate   _localDate;
+    private LocalDate   _localBirthDate;
 
     public Person(String name, String gender, String dateOfBirth)
     {
@@ -16,7 +16,7 @@ public class Person
 
         // Parse the dates of birth
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-        this._localDate = LocalDate.parse(dateOfBirth, formatter);
+        this._localBirthDate = LocalDate.parse(dateOfBirth, formatter);
     }
 
     public String getName()
@@ -34,8 +34,8 @@ public class Person
         return this._dateOfBirth;
     }
 
-    public LocalDate getLocalDate ()
+    public LocalDate getLocalBirthDate ()
     {
-        return this._localDate;
+        return this._localBirthDate;
     }
 }
