@@ -6,3 +6,4 @@ Wes Jackson, Male, 14/08/74
 Charles David, Male, 01/01/00
 Lea David, Female, 31/12/99
 Jack Black, Male, 31/12/99
+Jessica Jones, Female, 02/01/00

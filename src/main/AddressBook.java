@@ -42,6 +42,7 @@ public class AddressBook {
         Boolean     foundA = false;
         Boolean     foundB = false;
 
+        // Check if both arguments are valid strings, if not, throw an exception
         if (personA == null)
             throw new NullPointerException("First argument of AgeComparison can't be null");
         if (personB == null)
@@ -67,6 +68,7 @@ public class AddressBook {
                 break ;
             }
         }
+        // Check if both persons are found, if not, throw an exception
         if (!foundA && !foundB)
             throw new IllegalArgumentException(personA + " and " + personB + " don't exist in this address book");
         if (!foundA)

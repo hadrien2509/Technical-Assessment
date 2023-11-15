@@ -3,10 +3,10 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         
-        // Check if the correct number of arguments is provided
+        // The program should be called with a single command line argument specifying the location of the text file
         if (args.length != 1)
         {
-            System.err.println("Usage: java AddressBook <filename>");
+            System.err.println("Usage: java Main <filename>");
             return;
         }
 
