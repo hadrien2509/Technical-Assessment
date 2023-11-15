@@ -35,10 +35,10 @@ public class AddressBook {
         Boolean     foundA = false;
         Boolean     foundB = false;
 
-        // if (personA == null || personA.isEmpty())
-        //     return -1;
-        // if (personB == null || personA.isEmpty())
-        //     return -1;
+        if (personA == null || personA.isEmpty())
+            throw new IllegalArgumentException("First argument of AgeComparison is null or empty");
+        if (personB == null || personB.isEmpty())
+            throw new IllegalArgumentException("First argument of AgeComparison is null or empty");
         for (Person person : _persons)
         {
             if (person.getName().equals(personA))
@@ -68,7 +68,9 @@ public class AddressBook {
         int count = 0;
 
         if (gender == null || gender.isEmpty())
-            return -1;
+            return 0;
+        if (_persons.isEmpty())
+            return 0;
         for (Person person : _persons)
         {
             if (person.getGender().equals(gender))
@@ -79,6 +81,8 @@ public class AddressBook {
 
     public ArrayList<Person> OldestPerson ()
     {
+        if (_persons.isEmpty())
+            return null;
         Person oldest = _persons.get(0);
         ArrayList<Person> oldests = new ArrayList<Person>();
 

@@ -8,17 +8,23 @@ public class Main {
 
         String filePath = args[0];
         
-        AddressBook addressBook = new AddressBook(filePath);
-
-        int howManyMales = addressBook.GenderCount("male");
-        long comparisonBillPaul = addressBook.AgeComparison("Bill McKnight", "Paul Robinson");
-        ArrayList<Person> oldestPerson = addressBook.OldestPerson();
-
-        System.out.println(howManyMales);
-        for (Person person : oldestPerson)
+        try
         {
-            System.out.println(person.getName());
+            AddressBook addressBook = new AddressBook(filePath);
+            int howManyMales = addressBook.GenderCount("male");
+            long comparisonBillPaul = addressBook.AgeComparison("Bill McKnight", "Paul Robinson");
+            ArrayList<Person> oldestPerson = addressBook.OldestPerson();
+
+            System.out.println(howManyMales);
+            for (Person person : oldestPerson)
+            {
+                System.out.println(person.getName());
+            }
+            System.out.println(comparisonBillPaul);
         }
-        System.out.println(comparisonBillPaul);
+        catch (Exception e)
+        {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
 }

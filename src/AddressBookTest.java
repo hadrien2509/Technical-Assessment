@@ -22,15 +22,17 @@ public class AddressBookTest {
         AddressBook addressBook = new AddressBook("files/Test.txt");
         int GenderCount = addressBook.GenderCount(null);
 
-        assertEquals(-1, GenderCount);
+        assertEquals(0, GenderCount);
     }
 
     @Test
-    void FemaleCount() {
+    void GenderCount() {
         AddressBook addressBook = new AddressBook("files/Test.txt");
-        int GenderCount = addressBook.GenderCount("Female");
+        int femaleCount = addressBook.GenderCount("Female");
+        int maleCount = addressBook.GenderCount("Male");
 
-        assertEquals(2, GenderCount);
+        assertEquals(2, femaleCount);
+        assertEquals(8, maleCount);
     }
 
     @Test
@@ -57,6 +59,35 @@ public class AddressBookTest {
         long AgeComparison = addressBook.AgeComparison("Eliott Noleap", "Elia Noleap");
 
         assertEquals(1, AgeComparison);
+    }
+
+    @Test
+    void AgeComparisonIllegalArgument() {
+        AddressBook addressBook = new AddressBook("files/Test.txt");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressBook.AgeComparison(null, "Paul Robinson");
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressBook.AgeComparison("Bill McKnight", null);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressBook.AgeComparison(null, null);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressBook.AgeComparison("", "Paul Robinson");
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressBook.AgeComparison("Bill McKnight", "");
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            addressBook.AgeComparison("", "");
+        }); 
     }
 
     /*** Invalid file format tests ***/
@@ -91,7 +122,7 @@ public class AddressBookTest {
         });
     }
 
-    //Testing 29th February for Bill McKnight (leap year)
+    //Testing 29th February for Bill McKnight (not leap year)
     @Test
     void DateTimeParseException4() {
         

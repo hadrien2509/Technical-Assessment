@@ -16,7 +16,7 @@ public class Person
         this._dateOfBirth = dateOfBirth;
 
         // Parse the dates of birth in a strict way to LocalDate type, throws an exception if the date is invalid
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uu").withResolverStyle(ResolverStyle.STRICT);
         this._localBirthDate = LocalDate.parse(dateOfBirth, formatter);
     }
