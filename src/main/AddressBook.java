@@ -21,7 +21,7 @@ public class AddressBook {
         {
             String line;
             while ((line = reader.readLine()) != null) { // Read the file line by line
-                String[] columns = line.split(", ");
+                String[] columns = line.split(",");
                 if (columns.length == 3) { // If the line contains 3 columns, add a new person to the list
                     _persons.add(new Person(columns[0], columns[1], columns[2])); // Add a new person to the list
                 }
@@ -99,7 +99,7 @@ public class AddressBook {
         if (_persons.isEmpty())
             return null;
         Person oldest = _persons.get(0);
-        ArrayList<Person> oldests = new ArrayList<Person>();
+        ArrayList<Person> oldests = new ArrayList<Person>(); // In case there are multiple oldest persons
 
         for (Person person : _persons)
         {
@@ -122,7 +122,7 @@ public class AddressBook {
         if (_persons.isEmpty())
             return null;
         Person youngest = _persons.get(0);
-        ArrayList<Person> youngests = new ArrayList<Person>();
+        ArrayList<Person> youngests = new ArrayList<Person>(); // In case there are multiple youngest persons
 
         for (Person person : _persons)
         {

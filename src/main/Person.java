@@ -15,12 +15,12 @@ public class Person
 
     public Person(String name, String gender, String dateOfBirth)
     {
-        if (name.isEmpty() || gender.isEmpty() || dateOfBirth.isEmpty()) // Check if the column(s) is/are empty
-            throw new IllegalArgumentException("Empty column(s) in the address book"); // Throw an exception if it is the case
+        if (name.trim().isEmpty() || gender.trim().isEmpty() || dateOfBirth.trim().isEmpty()) // Check if the column(s) is/are empty
+            throw new IllegalArgumentException("Missing person's information(s)"); // Throw an exception if it is the case
 
-        this._name = name;
-        this._gender = gender;
-        this._dateOfBirth = dateOfBirth;
+        this._name = name.trim();
+        this._gender = gender.trim();
+        this._dateOfBirth = dateOfBirth.trim();
 
         // Parse the dates of birth in a strict way to LocalDate type, throws an exception if the date is invalid
 
@@ -31,7 +31,7 @@ public class Person
                 .toFormatter()
                 .withResolverStyle(ResolverStyle.STRICT);
 
-        this._localBirthDate = LocalDate.parse(dateOfBirth, formatter);
+        this._localBirthDate = LocalDate.parse(this._dateOfBirth, formatter);
 
         // Calculate the age of the person
         this._age = Period.between(this._localBirthDate, LocalDate.now()).getYears();

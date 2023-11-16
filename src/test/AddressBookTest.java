@@ -4,7 +4,7 @@ import java.time.format.DateTimeParseException;
 
 public class AddressBookTest {
 
-    /*** Methods tests ***/
+    /*** OldestPerson() tests ***/
 
     @Test
     void OldestPersons() {
@@ -23,6 +23,8 @@ public class AddressBookTest {
 
         assertEquals(0, GenderCount);
     }
+
+    /*** GenderCount() tests ***/
 
     @Test
     void GenderCount() {
@@ -48,13 +50,7 @@ public class AddressBookTest {
         assertEquals(0, maleCount3);
     }
 
-    @Test
-    void AgeComparison() {
-        AddressBook addressBook = new AddressBook("ressources/Test.txt");
-        long AgeComparison = addressBook.AgeComparison("Bill McKnight", "Paul Robinson");
-
-        assertEquals(2862, AgeComparison);
-    }
+    /*** Age and Oldest/YoungestPerson() tests ***/
 
     @Test
     void AgeAndYoungestTest () {
@@ -67,9 +63,21 @@ public class AddressBookTest {
         assertEquals(123, addressBook.getPersons().get(5).getAge());
         assertEquals(23, addressBook.getPersons().get(6).getAge());
         assertEquals(23, addressBook.getPersons().get(7).getAge());
-        assertEquals("Charles David", addressBook.OldestPerson().get(0).getName());
-        assertEquals("Lea David", addressBook.YoungestPerson().get(0).getName());
-        assertEquals("Jack Black", addressBook.YoungestPerson().get(1).getName());
+        assertEquals("Charles David", addressBook.OldestPerson().get(0).getName()); //Checking boundary values
+        assertEquals("Lea David", addressBook.YoungestPerson().get(0).getName()); //Checking boundary values
+        assertEquals("Jack Black", addressBook.YoungestPerson().get(1).getName()); //Checking boundary values
+    }
+
+    /*** AgeComparison() tests ***/
+
+    @Test
+    void AgeComparison() {
+        AddressBook addressBook = new AddressBook("ressources/Age.txt");
+        long AgeComparison1 = addressBook.AgeComparison("Lea David", "Jack Black");
+        long AgeComparison2 = addressBook.AgeComparison("Bill McKnight", "Paul Robinson");
+
+        assertEquals(0, AgeComparison1);
+        assertEquals(2862, AgeComparison2);
     }
 
     //For a leap year testing difference between 28th February and 1st March
@@ -128,7 +136,7 @@ public class AddressBookTest {
         });
     }
 
-    /*** Invalid file format tests ***/
+    /*** Invalid date tests ***/
 
     @Test
     void DateTimeParseException1() {
@@ -181,6 +189,8 @@ public class AddressBookTest {
             addressBook.OldestPerson();
         });
     }
+
+    /*** Invalid file format tests ***/
 
     //Testing if it still works if the file contains lines that don't have 3 columns
     @Test
