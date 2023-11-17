@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -76,6 +78,60 @@ public class AddressBook {
         if (!foundB)
             throw new IllegalArgumentException(personB + " doesn't exist in this address book");
         return ChronoUnit.DAYS.between(dateA, dateB); // Return the number of days between the two dates
+    }
+
+    public void sortByAge ()
+    {
+        if (_persons.isEmpty())
+            return ;
+        for (int i = 0; i < _persons.size() - 1; i++)
+        {
+            for (int j = 0; j < _persons.size() - i - 1; j++)
+            {
+                if (_persons.get(j).getLocalBirthDate().isAfter(_persons.get(j + 1).getLocalBirthDate()))
+                {
+                    Person temp = _persons.get(j);
+                    _persons.set(j, _persons.get(j + 1));
+                    _persons.set(j + 1, temp);
+                }
+            }
+        }
+    }
+
+    public void sortByName ()
+    {
+        if (_persons.isEmpty())
+            return ;
+        for (int i = 0; i < _persons.size() - 1; i++)
+        {
+            for (int j = 0; j < _persons.size() - i - 1; j++)
+            {
+                if (_persons.get(j).getName().compareTo(_persons.get(j + 1).getName()) > 0)
+                {
+                    Person temp = _persons.get(j);
+                    _persons.set(j, _persons.get(j + 1));
+                    _persons.set(j + 1, temp);
+                }
+            }
+        }
+    }
+
+    public void outputToFile (String filePath)
+    {
+        if (_persons.isEmpty())
+            return ;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath)))
+        {
+            for (Person person : _persons)
+            {
+                writer.write(person.getName() + ", " + person.getGender() + ", " + person.getDateOfBirth());
+                writer.newLine();
+            }
+        }
+        catch (IOException e)
+        {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     public int GenderCount (String gender)

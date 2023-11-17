@@ -233,4 +233,36 @@ public class AddressBookTest {
             addressBook.OldestPerson();
         });
     }
+
+    /*** SortByName() tests ***/
+
+    @Test
+    void SortByName() {
+        AddressBook addressBook = new AddressBook("ressources/AddressBook.txt");
+        addressBook.sortByName();
+        addressBook.outputToFile("SortedByName.txt");
+        AddressBook sortedAddressBook = new AddressBook("SortedByName.txt");
+
+        assertEquals("Bill McKnight", sortedAddressBook.getPersons().get(0).getName());
+        assertEquals("Gemma Lane", sortedAddressBook.getPersons().get(1).getName());
+        assertEquals("Paul Robinson", sortedAddressBook.getPersons().get(2).getName());
+        assertEquals("Sarah Stone", sortedAddressBook.getPersons().get(3).getName());
+        assertEquals("Wes Jackson", sortedAddressBook.getPersons().get(4).getName());
+    }
+
+    /*** SortByAge() tests ***/
+
+    @Test
+    void SortByAge() {
+        AddressBook addressBook = new AddressBook("ressources/AddressBook.txt");
+        addressBook.sortByAge();
+        addressBook.outputToFile("SortedByAge.txt");
+        AddressBook sortedAddressBook = new AddressBook("SortedByAge.txt");
+
+        assertEquals("Wes Jackson", sortedAddressBook.getPersons().get(0).getName());
+        assertEquals("Bill McKnight", sortedAddressBook.getPersons().get(1).getName());
+        assertEquals("Sarah Stone", sortedAddressBook.getPersons().get(2).getName());
+        assertEquals("Paul Robinson", sortedAddressBook.getPersons().get(3).getName());
+        assertEquals("Gemma Lane", sortedAddressBook.getPersons().get(4).getName());
+    }
 }
